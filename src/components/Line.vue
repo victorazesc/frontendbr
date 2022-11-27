@@ -35,24 +35,6 @@ const emit = defineEmits<{
         </button>
       </div>
     </div>
-    <small style="color: #999; float: left">Pulicado em {{ new Intl.DateTimeFormat('pt-BR').format(new Date(props.created_at)) }}</small>
+    <small style="color: #999; float: left">Publicado em {{ new Intl.DateTimeFormat('pt-BR').format(new Date(props.created_at)) }}</small>
   </div>
 </template>
-
-<!--
- <div className='line'>
-    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-      <span>{props.title}
-    <br />
-    <small style={{color:'#999'}}>Pulicado em {new Intl.DateTimeFormat('pt-BR').format(new Date(props.created_at))}</small>
-    </span>
-      <span className='labelsLine'>
-      {
-        props.tags.map((e, index) => {
-          return  <span className='badge' key={index} style={{ borderColor: '#'+e.color }} >{e.name}</span>
-        })
-      }
-      </span>
-    </div>
-
-  </div> -->

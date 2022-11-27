@@ -15,6 +15,6 @@ const props = defineProps({
       <span v-for="(e, i) in props.tags" :key="i" className="badge" :style="{ borderColor: `#${e.color}`, color: `#${e.color}` }">{{ e.name }}</span>
     </div>
 
-    <small style="color: #999">Pulicado em {{ new Intl.DateTimeFormat('pt-BR').format(new Date(props.created_at)) }}</small>
+    <small style="color: #999">Publicado em {{ new Intl.DateTimeFormat('pt-BR').format(new Date(props.created_at)) }}</small>
   </div>
 </template>
