@@ -1,0 +1,18 @@
+button:
+  about: Sobre
+  back: Voltar
+  go: Ir
+  see: 'Ver Vagas'
+  apply: 'Candidatar-se'
+  home: Início
+  toggle_dark: Alternar modo escuro
+  toggle_langs: Mudar de idioma
+intro:
+  desc: Agregador de vagas para desenvolvedores Frontend
+  dynamic-route: Demonstração de rota dinâmica
+  hi: Olá, {name}!
+  aka: Também conhecido como
+  whats-your-name: Qual é o seu nome?
+not-found: Não encontrado
+input:
+  what-do-you-search: O que você procura ?
