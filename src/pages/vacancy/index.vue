@@ -200,7 +200,7 @@ onMounted(async () => {
             <div i-carbon-dicom-overlay />
           </RouterLink>
 
-          <a className="icon-btn mx-2" rel="noreferrer" href="https://github.com/antfu/vitesse" target="_blank"
+          <a className="icon-btn mx-2" rel="noreferrer" href="https://github.com/victorazesc/frontendbr" target="_blank"
             title="GitHub">
             <div i-carbon-logo-github />
           </a>

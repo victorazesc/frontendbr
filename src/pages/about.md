@@ -8,7 +8,6 @@ title:  About
 
 <div  class="text-center">
 
-<!-- You can use Vue components inside markdown -->
 
 <div  i-carbon-dicom-overlay  class="text-4xl -mb-6 m-auto"  />
 
@@ -21,6 +20,6 @@ title:  About
 Aplicação desenvolvida para auxiliar pessoas a encontrar vagas para programador frontend, desenvolvido por [@victorazesc](https://github.com/victorazesc).
 
  
-De uma olhada no [repositório do projeto](https://github.com/antfu/vitesse) para mais detalhes.
+De uma olhada no [repositório do projeto](https://github.com/victorazesc/frontendbr) para mais detalhes.
 
 [ver vagas](/vacancy)
