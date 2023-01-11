@@ -12,6 +12,10 @@ html.dark {
   background: #121212;
 }
 
+.show-mobile {
+display: none !important
+}
+
 .multiselect-search.dark {
 background: red !important
 }
@@ -105,6 +109,75 @@ h6 {
     gap: 25px;
     margin-bottom: 40px;
   }
+
+
+}
+
+.multiselect {
+  width: 300px !important;
+}
+
+.vacancy-data {
+  height: calc(100vh - 8rem)
+}
+
+@media only screen and (max-width: 600px) {
+  .hide-mobile {
+display: none !important;
+}
+
+#teste {
+  display: block;
+  margin-top: 40px;
+}
+
+#teste2 {
+  height: calc(100vh - 11rem) !important;
+}
+
+.information {
+  z-index: 9;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.information-menu {
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+}
+
+.vacancy-data {
+  height: 100vh;
+  padding-right: 0px !important;
+}
+.markdown-body {
+  margin-left: 0px !important;
+}
+
+.show-mobile {
+display: flex !important;
+}
+
+.select-area {
+width: 100% !important;
+flex-direction: column;
+}
+.multiselect {
+  width: 100% !important;
+}
+
+.menu { 
+display: flex;
+flex-direction: column-reverse;
+}
+
+.menu-mobile {
+  display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 15px;}
 }
 
 .line {
@@ -291,3 +364,6 @@ html.dark *::-webkit-scrollbar-thumb {
 	 margin-bottom: 16px;
 }
  
+.btn {
+  font-size: 15px
+}

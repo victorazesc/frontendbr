@@ -11,6 +11,7 @@ import Multiselect from '@vueform/multiselect'
 
 import '@vueform/multiselect/themes/default.css'
 
+const screenSize = ref(0)
 const router = useRouter()
 const keyUp = ref(0)
 const page = ref(1)
@@ -25,6 +26,8 @@ const searchTags = ref([])
 const vacancy = ref({})
 const favoriteVacancies = ref([])
 const { t } = useI18n()
+
+const information = ref(true)
 
 const options = ref([])
 
@@ -146,6 +149,7 @@ const share = () => {
 }
 
 
+
 onMounted(async () => {
   const github = await axios.get('https://api.github.com/repos/frontendbr/vagas')
   const labels = await axios.get('https://api.github.com/repos/frontendbr/vagas/labels?per_page=100')
@@ -153,18 +157,27 @@ onMounted(async () => {
   labels.data.map((e) => { tres.push({ value: e.name, color: e.color, label: e.name, name: e.name }) })
   options.value = tres
   limit.value = github.data.open_issues_count
+
+  if(screen.width >= 600) {
+    information.value = true
+  } else {
+    information.value = false
+  }
+
+  screenSize.value = screen.width
 })
 </script>
 
 <template overflow-hidden>
   <nav text-xl text-right flex justify-between pb-6 mb-6 fixed left-0 bg="white dark:#121212" w-full z-1 p-6 top-0
     items-center border-b="1px #E5E7EB dark:gray-700">
-    <div flex items-center justify-between w-full>
-      <div flex items-center>
-        <div id="your-class" inline-block mr-5 @click="go" />
-        <Multiselect important-w-300px placeholder="Selecione alguma tag" mode="multiple" v-model="value" dark:text-gray-700
-          :close-on-select="false" :searchable="true" :object="true" :resolve-on-load="false" :delay="0" :min-chars="1"
-          :options=options @select=loadvacancies()>
+    <div class="menu" flex items-center justify-between w-full>
+      <div class="select-area" flex items-center>
+        <div id="your-class" class="hide-mobile" ska inline-block mr-5 @click="go" />
+
+        <Multiselect placeholder="Selecione alguma tag" mode="multiple" v-model="value"
+          dark:text-gray-700 :close-on-select="false" :searchable="true" :object="true" :resolve-on-load="false"
+          :delay="0" :min-chars="1" :options=options @select=loadvacancies()>
           <template v-slot:multiplelabel="{ values }">
             <div class="multiselect-multiple-label">
               {{ values.length }} tags selecionadas
@@ -173,7 +186,7 @@ onMounted(async () => {
         </Multiselect>
         <div v-if="value.length > 0" text-left ml-16px>
           <span text-12px m-0 leading-none>Tags Buscadas</span>
-          <div style="width: auto" leading-none gap-1 flex>
+          <div leading-none gap-1 flex place-self-start style="overflow: scroll;  width: calc(100vw - 60px); height: 40px; padding: 5px;">
             <button v-for="(tag, tagIndex) of value" :key="tagIndex" className="!outline-none" m-0 p-0
               :title="t('button.toggle_dark')" @click="removeTag(tagIndex)">
               <span leading-none className="badge" m-0 pr-5px p-0
@@ -184,7 +197,8 @@ onMounted(async () => {
         </div>
       </div>
 
-      <div>
+      <div class="menu-mobile">
+        <div id="your-class" class="show-mobile" ska inline-block mr-5 @click="go" />
         <div flex items-center>
           <button className="icon-btn mx-2 !outline-none" :title="t('button.toggle_dark')"
             @click="favoriteVacancies.length === 0 ? null : toggleFavorite()">
@@ -223,14 +237,14 @@ onMounted(async () => {
             <template v-if="!favorites">
               <Line v-for="(vacancy, i) in vacancies" id="infinite-list" :key="i" mb-2 :title="vacancy.title"
                 :tags="vacancy.labels" :created_at="vacancy.created_at" :favorite="vacancy.favorite"
-                @save="favoriteVacancy(vacancy)" @mouseenter="getVacancy(vacancy)">
+                @save="favoriteVacancy(vacancy)" @mouseenter="getVacancy(vacancy)" @click="() => information = true">
                 <input type="hidden" :value="vacancy.favorite = false">
               </Line>
             </template>
             <template v-else>
               <Line v-for="(vacancy, i) in favoriteVacancies" id="infinite-list" :key="i" mb-2 :title="vacancy.title"
                 :tags="vacancy.labels" :created_at="vacancy.created_at" :favorite="vacancy.favorite"
-                @save="favoriteVacancy(vacancy)" @mouseenter="body = marked.parse(vacancy.body)">
+                @save="favoriteVacancy(vacancy)" @mouseenter="body = marked.parse(vacancy.body)" @click="() => information = true">
                 <input type="hidden" :value="vacancy.favorite = false">
               </Line>
             </template>
@@ -243,23 +257,28 @@ onMounted(async () => {
             </VueEternalLoading>
           </div>
 
-          <div>
-            <Menu as="div" text-left ml-16px mr-32px border="1px #E5E7EB dark:gray-700" rounded-lg p-2
+          <div class="information" v-if="information">
+            <Menu class="information-menu" as="div" text-left ml-16px mr-32px border="1px #E5E7EB dark:gray-700" rounded-lg p-2
               bg="white dark:#121212" flex justify-between relative h-52px z-1>
               <div flex>
-                <a v-if="apply" btn text-md mr-16px bg="#00FFB8 hover:#00C991" :href="apply">
+                <a v-if="apply" btn mr-16px bg="#00FFB8 hover:#00C991" :href="apply">
                   {{ t('button.apply') }}
                 </a>
 
                 <MenuButton bg="#fff dark:#161b22" border="#E5E7EB dark:gray-700" text-gray-700 dark:text-gray-200
-                  class="inline-flex justify-center rounded-md border border-gray-300 bg-white btn text-md font-medium hover:text-gray-100 hover:black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+                  class="inline-flex justify-center rounded-md border border-gray-300 bg-white btn font-medium hover:text-gray-100 hover:black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
                   Links úteis
                   <Icon relative m-4px left-8px icon="akar-icons:chevron-down" />
                 </MenuButton>
               </div>
+              <div flex>
               <button className="icon-btn mx-2 !outline-none" :title="t('button.toggle_dark')" @click="share()">
                 <Icon icon="carbon:share" style="font-size: 25px;" />
               </button>
+              <button className="icon-btn mx-2 !outline-none" :title="t('button.toggle_dark')" @click="() => information = false">
+                <Icon icon="carbon:close" style="font-size: 25px;" />
+              </button>
+            </div>
               <transition enter-active-class="transition ease-out duration-100"
                 enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
                 leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
@@ -275,7 +294,7 @@ onMounted(async () => {
                 </MenuItems>
               </transition>
             </Menu>
-            <div pt-1 mt="-48px" overflow-scroll scroll-p-2 overflow-x-visible style="height: calc(100vh - 8rem)" pr-6>
+            <div class="vacancy-data" pt-1 mt="-48px" overflow-scroll scroll-p-2 overflow-x-visible pr-6>
               <div rd="10px" className="markdown-body" pt-20 ml-4 sticky bg="#fff dark:#161b22"
                 border="#E5E7EB dark:gray-700 1px solid">
                 <span id="corpo" v-html="body" />
