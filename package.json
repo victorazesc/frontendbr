@@ -41,6 +41,7 @@
     "@iconify/vue": "^3.2.1",
     "@intlify/vite-plugin-vue-i18n": "^4.0.0",
     "@types/markdown-it-link-attributes": "^3.0.1",
+    "@types/marked": "^6.0.0",
     "@types/nprogress": "^0.2.0",
     "@vitejs/plugin-vue": "^2.3.3",
     "@vue/test-utils": "^2.0.0",

@@ -186,7 +186,7 @@ onMounted(async () => {
         </Multiselect>
         <div v-if="value.length > 0" text-left ml-16px>
           <span text-12px m-0 leading-none>Tags Buscadas</span>
-          <div leading-none gap-1 flex place-self-start style="overflow: scroll;  width: calc(100vw - 60px); height: 40px; padding: 5px;">
+          <div leading-none gap-1 flex place-self-start style="overflow-x: auto; height: 40px; padding: 5px; max-width: 800px; scrollbar-color: auto;">
             <button v-for="(tag, tagIndex) of value" :key="tagIndex" className="!outline-none" m-0 p-0
               :title="t('button.toggle_dark')" @click="removeTag(tagIndex)">
               <span leading-none className="badge" m-0 pr-5px p-0
@@ -232,8 +232,8 @@ onMounted(async () => {
       </template>
       <template v-else>
         <div id="teste" grid grid-cols-2 gap-2>
-          <div id="teste2" flex flex-col overflow-scroll overflow-x-visible pt-1 pl-10px pr-32px
-            style="height: calc(100vh - 8rem)">
+          <div flex flex-col overflow-scroll overflow-x-visible pt-1 pl-10px pr-32px
+            style="height: calc(100vh - 8rem); scrollbar-color: auto">
             <template v-if="!favorites">
               <Line v-for="(vacancy, i) in vacancies" id="infinite-list" :key="i" mb-2 :title="vacancy.title"
                 :tags="vacancy.labels" :created_at="vacancy.created_at" :favorite="vacancy.favorite"

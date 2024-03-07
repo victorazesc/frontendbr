@@ -118,6 +118,7 @@ h6 {
 }
 
 .vacancy-data {
+  scrollbar-color: auto;
   height: calc(100vh - 8rem)
 }
 
@@ -129,10 +130,6 @@ display: none !important;
 #teste {
   display: block;
   margin-top: 40px;
-}
-
-#teste2 {
-  height: calc(100vh - 11rem) !important;
 }
 
 .information {
@@ -149,6 +146,7 @@ display: none !important;
 }
 
 .vacancy-data {
+  scrollbar-color: auto;
   height: 100vh;
   padding-right: 0px !important;
 }
