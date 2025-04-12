@@ -22,6 +22,5 @@ type Vaga = {
       "mil reais",
     ];
     
-    console.log(palavrasChave.some((termo) => body.includes(termo)))
     return palavrasChave.some((termo) => body.includes(termo));
   }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "../globals.css";
 import { ThemeProvider } from "@/providers/themeProvider";
 import NavBar from "@/components/navbar";
+import AuthProvider from "@/providers/sessionProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,10 +24,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="max-w-7xl mx-auto relative h-full">
-            <NavBar />
-            {children}
-          </div>
+          <AuthProvider>
+            <div className="max-w-7xl mx-auto relative h-full">
+              <NavBar />
+              {children}
+            </div>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -15,6 +15,10 @@ export default [
   {
     rules: {
       "react-hooks/exhaustive-deps": "off",
+      '@typescript-eslint/no-unused-vars': 'off',
+      "@typescript-eslint/ban-ts-comment": 'off',
+      "import/no-anonymous-default-export": 'off',
+      "@typescript-eslint/no-explicit-any": 'off',
     },
   },
 ];

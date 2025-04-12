@@ -4,19 +4,13 @@ import { ChevronLeft, Info } from "lucide-react"
 import SearchBar from "@/components/ui/search";
 import VacancyCard, { type Vacancy } from "@/components/ui/vancancyCard";
 import axios from "axios";
-import { extractCompanyName } from "@/utils/extractCompanyName";
-import { hasSalaryInfo } from "@/utils/hasSalaryInfo";
 import { Button } from "@/components/ui/button";
-import { extractCompanyDomain } from "@/utils/extractCompanyDomain";
-import { extractLocation } from "@/utils/extractLocation";
-import { extractApplyInfo } from "@/utils/extractApplyInfo";
 import { useFavorites } from "@/stores/useFavorites";
 import VacancyDetails from "@/components/vacancyDetails";
 
 export default function Home() {
   const [vacancies, setVacancies] = useState<Vacancy[]>([]);
   const [selectedVacancy, setSelectedVacancy] = useState<Vacancy | null>(null);
-  const [page, setPage] = useState(1);
   const [filtered, setFiltered] = useState<Vacancy[]>([]);
   const [loading, setLoading] = useState(false);
   const [sortBy, setSortBy] = useState<'recent' | 'salary'>('recent');
@@ -61,20 +55,12 @@ export default function Home() {
         setLoading(true);
 
         const response = await axios.get(
-          `https://api.github.com/repos/frontendbr/vagas/issues?state=open&page=${page}&per_page=100`
+          `api/jobs`
         );
 
-        const enrichedData = response.data.map((vaga: Vacancy) => ({
-          ...vaga,
-          companyName: extractCompanyName({ title: vaga.title, body: vaga.body }),
-          hasSalaryInfo: hasSalaryInfo(vaga),
-          companyDomain: extractCompanyDomain(vaga),
-          location: extractLocation(vaga),
-          subscriptionAction: extractApplyInfo(vaga.body),
-        }));
 
         setVacancies((prev) => {
-          const all = [...prev, ...enrichedData];
+          const all = [...prev, ...response.data];
 
           const urlParams = new URLSearchParams(window.location.search);
           const idFromURL = urlParams.get("id");
@@ -92,7 +78,6 @@ export default function Home() {
           return all;
         });
 
-        setPage((p) => p + 1);
       } catch (error) {
         console.error("Erro ao buscar vagas:", error);
       } finally {
