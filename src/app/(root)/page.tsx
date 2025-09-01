@@ -1,12 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
-import { ChevronLeft, Info } from "lucide-react"
+import { ChevronLeft, CircleFadingPlus, Info } from "lucide-react"
 import SearchBar from "@/components/ui/search";
 import VacancyCard, { type Vacancy } from "@/components/ui/vancancyCard";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { useFavorites } from "@/stores/useFavorites";
 import VacancyDetails from "@/components/vacancyDetails";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function Home() {
   const [vacancies, setVacancies] = useState<Vacancy[]>([]);
@@ -16,6 +18,7 @@ export default function Home() {
   const [sortBy, setSortBy] = useState<'recent' | 'salary'>('recent');
   const [searchTerm, setSearchTerm] = useState('');
   const { favorites, showFavorites } = useFavorites();
+  const { data } = useSession();
 
   useEffect(() => {
     const filteredVacancies = vacancies
@@ -111,14 +114,17 @@ export default function Home() {
     }
 
     // Default: por data (mais recentes primeiro)
-    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+    return new Date(b?.created_at).getTime() - new Date(a?.created_at).getTime();
   });
 
   return (
     <>
-      <div className={`border-b flex items-center justify-center py-8 ${isMobile && selectedVacancy ? 'hidden' : 'visible'}`}>
+      <div className={`border-b flex flex-col gap-4 items-center justify-center py-8 ${isMobile && selectedVacancy ? 'hidden' : 'visible'}`}>
         <SearchBar value={searchTerm} onChange={setSearchTerm} />
+        {data?.user && <Link className="flex gap-1 items-center" href={'/job'}><CircleFadingPlus size={16} /> Adicione Agora uma mesmo uma vaga de trabalho</Link>}
+
       </div>
+
 
       <div className={`border-b flex items-center justify-start py-4 ${isMobile && selectedVacancy ? 'visible' : 'hidden'}`}>
         <Button
@@ -136,6 +142,7 @@ export default function Home() {
           <Info className="text-primary" size={20} />  Sua busca por {searchTerm} nessa não tem resultados ou tem resultados limitados abaixo algumas recomendações que possa fazer sentido para você.
         </div>
       }
+
 
       <div className={`grid  md:grid-cols-[35%_auto] gap-2 ${isMobile && selectedVacancy ? 'mt-0' : 'mt-8'}`}>
         {/* COLUNA DA ESQUERDA */}

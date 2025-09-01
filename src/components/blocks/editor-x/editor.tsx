@@ -1,14 +1,14 @@
 'use client'
 
 import {
-  InitialConfigType,
   LexicalComposer,
+  InitialConfigType,
 } from '@lexical/react/LexicalComposer'
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin'
-import { EditorState, SerializedEditorState } from 'lexical'
+import { SerializedEditorState, $getRoot } from 'lexical'
+import { $convertToMarkdownString, TRANSFORMERS } from '@lexical/markdown'
 
 import { FloatingLinkContext } from '@/components/editor/context/floating-link-context'
-import { SharedAutocompleteContext } from '@/components/editor/context/shared-autocomplete-context'
 import { editorTheme } from '@/components/editor/themes/editor-theme'
 import { TooltipProvider } from '@/components/ui/tooltip'
 
@@ -24,42 +24,67 @@ const editorConfig: InitialConfigType = {
   },
 }
 
+const defaultInitialValue: SerializedEditorState = {
+  root: {
+    children: [
+      {
+        children: [
+          {
+            detail: 0,
+            format: 0,
+            mode: 'normal',
+            style: '',
+            text: '',
+            type: 'text',
+            version: 1,
+          },
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        type: 'paragraph',
+        version: 1,
+      },
+    ],
+    direction: 'ltr',
+    format: '',
+    indent: 0,
+    type: 'root',
+    version: 1,
+  },
+}
+
 export function Editor({
-  editorState,
   editorSerializedState,
-  onChange,
-  onSerializedChange,
+  onMarkdownChange,
 }: {
-  editorState?: EditorState
   editorSerializedState?: SerializedEditorState
-  onChange?: (editorState: EditorState) => void
-  onSerializedChange?: (editorSerializedState: SerializedEditorState) => void
+  onMarkdownChange?: (markdown: string) => void
 }) {
   return (
     <div className="overflow-hidden rounded-lg border-input border bg-background shadow">
       <LexicalComposer
         initialConfig={{
           ...editorConfig,
-          ...(editorState ? { editorState } : {}),
           ...(editorSerializedState
-            ? { editorState: JSON.stringify(editorSerializedState) }
+            ? { editorState: JSON.stringify(editorSerializedState ?? defaultInitialValue) }
             : {}),
         }}
       >
         <TooltipProvider>
-          <SharedAutocompleteContext>
-            <FloatingLinkContext>
-              <Plugins />
-
-              <OnChangePlugin
-                ignoreSelectionChange={true}
-                onChange={(editorState) => {
-                  onChange?.(editorState)
-                  onSerializedChange?.(editorState.toJSON())
-                }}
-              />
-            </FloatingLinkContext>
-          </SharedAutocompleteContext>
+          {/* <SharedAutocompleteContext> */}
+          {/* <FloatingLinkContext> */}
+          <Plugins />
+          <OnChangePlugin
+            ignoreSelectionChange={true}
+            onChange={(editorState) => {
+              editorState.read(() => {
+                const markdown = $convertToMarkdownString(TRANSFORMERS, $getRoot())
+                onMarkdownChange?.(markdown)
+              })
+            }}
+          />
+          {/* </FloatingLinkContext> */}
         </TooltipProvider>
       </LexicalComposer>
     </div>

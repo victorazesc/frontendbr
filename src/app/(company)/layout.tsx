@@ -3,6 +3,7 @@ import "../globals.css";
 import { ThemeProvider } from "@/providers/themeProvider";
 import NavBar from "@/components/navbar";
 import AuthProvider from "@/providers/sessionProvider";
+import Sidebar from "@/components/profile/sidebar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -27,7 +28,12 @@ export default function RootLayout({
           <AuthProvider>
             <div className="max-w-7xl mx-auto relative h-full">
               <NavBar />
-              {children}
+              <div className="flex flex-col md:grid md:grid-cols-[20%_auto] gap-8 mt-8">
+                <Sidebar />
+                <div className="inset-0 bg-background z-50 p-6 overflow-y-auto">
+                  {children}
+                </div>
+              </div>
             </div>
           </AuthProvider>
 

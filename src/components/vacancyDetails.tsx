@@ -2,6 +2,7 @@ import { useFavorites } from "@/stores/useFavorites";
 import type { Vacancy } from "./ui/vancancyCard";
 import Image from "next/image";
 import Link from "next/link";
+import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Heart, Share2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
@@ -28,17 +29,29 @@ export default function VacancyDetails({ selectedVacancy }: { selectedVacancy: V
                                     />
                                 )}
                                 {selectedVacancy.companyName}
+                                {selectedVacancy.isMine && (
+                                    <Badge variant="secondary">Minha vaga</Badge>
+                                )}
                             </span>
                         )}
 
                         <div className="flex gap-2">
-                            <Link
-                                target="blank"
-                                className="bg-primary rounded-md text-primary-foreground flex items-center h-9 px-4 py-2 has-[>svg]:px-3"
-                                href={selectedVacancy?.subscriptionAction ?? ""}
-                            >
-                                Candidatar-se
-                            </Link>
+                            {selectedVacancy.isMine ? (
+                                <Link
+                                    className="rounded-md border px-4 py-2 flex items-center"
+                                    href={`/job/${selectedVacancy.id}`}
+                                >
+                                    Editar
+                                </Link>
+                            ) :
+                                <Link
+                                    target="blank"
+                                    className="bg-primary rounded-md text-primary-foreground flex items-center h-9 px-4 py-2 has-[>svg]:px-3"
+                                    href={selectedVacancy?.subscriptionAction ?? ""}
+                                >
+                                    Candidatar-se
+                                </Link>
+                            }
                             <Button
                                 variant="ghost"
                                 onClick={() => selectedVacancy && toggleFavorite(selectedVacancy.id)}

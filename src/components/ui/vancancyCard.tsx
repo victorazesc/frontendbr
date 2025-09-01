@@ -5,10 +5,10 @@ import { Button } from "./button";
 
 
 export interface Vacancy {
-    id: number;
+    id: string;
     title: string;
     html_url: string;
-    created_at: string;
+    created_at: string | Date;
     body: string;
     labels: {
         name: string;
@@ -19,6 +19,8 @@ export interface Vacancy {
     companyDomain?: string;
     location?: string;
     subscriptionAction?: string;
+    isMine?: boolean;
+    source?: string;
 }
 
 interface Props {
@@ -41,6 +43,10 @@ export default function VacancyCard({ vacancy, onClick, selected }: Props) {
                     {vacancy.companyDomain && <Image src={`https://www.google.com/s2/favicons?sz=64&domain=${vacancy.companyDomain}`} alt={vacancy.companyName ?? "icone"} width={26} height={26} />}
                     <span className="text-md">{vacancy.companyName}</span>
                 </div>
+                <div className="flex items-center gap-2">
+                {vacancy.isMine && (
+                    <span className="text-xs px-2 py-0.5 rounded-md border bg-secondary">Minha vaga</span>
+                )}
                 <Button variant="ghost" onClick={() => vacancy && toggleFavorite(vacancy.id)}>
                     <Heart
                         size={20}
@@ -48,6 +54,7 @@ export default function VacancyCard({ vacancy, onClick, selected }: Props) {
                         className={isFavorite(vacancy?.id ?? -1) ? "text-primary" : "text-foreground"}
                     />
                 </Button>
+                </div>
 
             </div>
             <h3 className="font-bold">{vacancy.title}</h3>
@@ -83,11 +90,11 @@ export default function VacancyCard({ vacancy, onClick, selected }: Props) {
                 <div className="flex gap-2 font-light text-sm">
                     <span>Publicado em </span>
                     <span>
-                        {new Intl.DateTimeFormat("pt-BR", {
+                        {vacancy?.created_at && new Intl.DateTimeFormat("pt-BR", {
                             day: "2-digit",
                             month: "2-digit",
                             year: "numeric",
-                        }).format(new Date(vacancy.created_at))}
+                        }).format(new Date(vacancy?.created_at))}
                     </span>
                 </div>
             </div>

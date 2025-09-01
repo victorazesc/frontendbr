@@ -9,7 +9,7 @@ import {
 
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin'
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin'
-import { ClearEditorPlugin } from '@lexical/react/LexicalClearEditorPlugin'
+// import { ClearEditorPlugin } from '@lexical/react/LexicalClearEditorPlugin'
 import { ClickableLinkPlugin } from '@lexical/react/LexicalClickableLinkPlugin'
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary'
 import { HashtagPlugin } from '@lexical/react/LexicalHashtagPlugin'
@@ -31,17 +31,17 @@ import { FormatHeading } from '@/components/editor/plugins/toolbar/block-format/
 import { FormatNumberedList } from '@/components/editor/plugins/toolbar/block-format/format-numbered-list'
 import { FormatParagraph } from '@/components/editor/plugins/toolbar/block-format/format-paragraph'
 import { FormatQuote } from '@/components/editor/plugins/toolbar/block-format/format-quote'
-import { BlockInsertPlugin } from '@/components/editor/plugins/toolbar/block-insert-plugin'
-import { InsertCollapsibleContainer } from '@/components/editor/plugins/toolbar/block-insert/insert-collapsible-container'
-import { InsertColumnsLayout } from '@/components/editor/plugins/toolbar/block-insert/insert-columns-layout'
-import { InsertEmbeds } from '@/components/editor/plugins/toolbar/block-insert/insert-embeds'
-import { InsertExcalidraw } from '@/components/editor/plugins/toolbar/block-insert/insert-excalidraw'
-import { InsertHorizontalRule } from '@/components/editor/plugins/toolbar/block-insert/insert-horizontal-rule'
-import { InsertImage } from '@/components/editor/plugins/toolbar/block-insert/insert-image'
-import { InsertInlineImage } from '@/components/editor/plugins/toolbar/block-insert/insert-inline-image'
-import { InsertPageBreak } from '@/components/editor/plugins/toolbar/block-insert/insert-page-break'
-import { InsertPoll } from '@/components/editor/plugins/toolbar/block-insert/insert-poll'
-import { InsertTable } from '@/components/editor/plugins/toolbar/block-insert/insert-table'
+// import { BlockInsertPlugin } from '@/components/editor/plugins/toolbar/block-insert-plugin'
+// import { InsertCollapsibleContainer } from '@/components/editor/plugins/toolbar/block-insert/insert-collapsible-container'
+// import { InsertColumnsLayout } from '@/components/editor/plugins/toolbar/block-insert/insert-columns-layout'
+// import { InsertEmbeds } from '@/components/editor/plugins/toolbar/block-insert/insert-embeds'
+// import { InsertExcalidraw } from '@/components/editor/plugins/toolbar/block-insert/insert-excalidraw'
+// import { InsertHorizontalRule } from '@/components/editor/plugins/toolbar/block-insert/insert-horizontal-rule'
+// import { InsertImage } from '@/components/editor/plugins/toolbar/block-insert/insert-image'
+// import { InsertInlineImage } from '@/components/editor/plugins/toolbar/block-insert/insert-inline-image'
+// import { InsertPageBreak } from '@/components/editor/plugins/toolbar/block-insert/insert-page-break'
+// import { InsertPoll } from '@/components/editor/plugins/toolbar/block-insert/insert-poll'
+// import { InsertTable } from '@/components/editor/plugins/toolbar/block-insert/insert-table'
 import { ClearFormattingToolbarPlugin } from '@/components/editor/plugins/toolbar/clear-formatting-toolbar-plugin'
 import { CodeLanguageToolbarPlugin } from '@/components/editor/plugins/toolbar/code-language-toolbar-plugin'
 import { ElementFormatToolbarPlugin } from '@/components/editor/plugins/toolbar/element-format-toolbar-plugin'
@@ -56,15 +56,15 @@ import { SubSuperToolbarPlugin } from '@/components/editor/plugins/toolbar/subsu
 
 import { ActionsPlugin } from '@/components/editor/plugins/actions/actions-plugin'
 import { CharacterLimitPlugin } from '@/components/editor/plugins/actions/character-limit-plugin'
-import { ClearEditorActionPlugin } from '@/components/editor/plugins/actions/clear-editor-plugin'
+// import { ClearEditorActionPlugin } from '@/components/editor/plugins/actions/clear-editor-plugin'
 import { CounterCharacterPlugin } from '@/components/editor/plugins/actions/counter-character-plugin'
-import { EditModeTogglePlugin } from '@/components/editor/plugins/actions/edit-mode-toggle-plugin'
-import { ImportExportPlugin } from '@/components/editor/plugins/actions/import-export-plugin'
-import { MarkdownTogglePlugin } from '@/components/editor/plugins/actions/markdown-toggle-plugin'
+// import { EditModeTogglePlugin } from '@/components/editor/plugins/actions/edit-mode-toggle-plugin'
+// import { ImportExportPlugin } from '@/components/editor/plugins/actions/import-export-plugin'
+// import { MarkdownTogglePlugin } from '@/components/editor/plugins/actions/markdown-toggle-plugin'
 import { MaxLengthPlugin } from '@/components/editor/plugins/actions/max-length-plugin'
-import { ShareContentPlugin } from '@/components/editor/plugins/actions/share-content-plugin'
-import { SpeechToTextPlugin } from '@/components/editor/plugins/actions/speech-to-text-plugin'
-import { TreeViewPlugin } from '@/components/editor/plugins/actions/tree-view-plugin'
+// import { ShareContentPlugin } from '@/components/editor/plugins/actions/share-content-plugin'
+// import { SpeechToTextPlugin } from '@/components/editor/plugins/actions/speech-to-text-plugin'
+// import { TreeViewPlugin } from '@/components/editor/plugins/actions/tree-view-plugin'
 import { AutoLinkPlugin } from '@/components/editor/plugins/auto-link-plugin'
 import { AutocompletePlugin } from '@/components/editor/plugins/autocomplete-plugin'
 import { CodeActionMenuPlugin } from '@/components/editor/plugins/code-action-menu-plugin'
@@ -98,7 +98,7 @@ import { TableActionMenuPlugin } from '@/components/editor/plugins/table-action-
 import { TableCellResizerPlugin } from '@/components/editor/plugins/table-cell-resizer-plugin'
 import { TableHoverActionsPlugin } from '@/components/editor/plugins/table-hover-actions-plugin'
 import { ToolbarPlugin } from '@/components/editor/plugins/toolbar/toolbar-plugin'
-import { TypingPerfPlugin } from '@/components/editor/plugins/typing-pref-plugin'
+// import { TypingPerfPlugin } from '@/components/editor/plugins/typing-pref-plugin'
 import { ContentEditable } from '@/components/editor/editor-ui/content-editable'
 
 import { AlignmentPickerPlugin } from '@/components/editor/plugins/picker/alignment-picker-plugin'
@@ -178,7 +178,7 @@ export function Plugins({ }) {
                 <Separator orientation="vertical" className="h-8" />
                 <ElementFormatToolbarPlugin />
                 <Separator orientation="vertical" className="h-8" />
-                <BlockInsertPlugin>
+                {/* <BlockInsertPlugin>
                   <InsertHorizontalRule />
                   <InsertPageBreak />
                   <InsertImage />
@@ -189,7 +189,7 @@ export function Plugins({ }) {
                   <InsertPoll />
                   <InsertColumnsLayout />
                   <InsertEmbeds />
-                </BlockInsertPlugin>
+                </BlockInsertPlugin> */}
               </>
             )}
           </div>
@@ -244,7 +244,7 @@ export function Plugins({ }) {
         <CodeHighlightPlugin />
         <CodeActionMenuPlugin anchorElem={floatingAnchorElem} />
 
-        <MarkdownShortcutPlugin 
+        <MarkdownShortcutPlugin
           transformers={[
             TABLE,
             HR,
@@ -257,7 +257,7 @@ export function Plugins({ }) {
             ...MULTILINE_ELEMENT_TRANSFORMERS,
             ...TEXT_FORMAT_TRANSFORMERS,
             ...TEXT_MATCH_TRANSFORMERS,
-          ]} 
+          ]}
         />
         {/* <TypingPerfPlugin /> */}
         <TabFocusPlugin />
@@ -315,10 +315,10 @@ export function Plugins({ }) {
             <CounterCharacterPlugin charset="UTF-16" />
           </div>
           <div className="flex justify-end flex-1">
-            <SpeechToTextPlugin />
-            <ShareContentPlugin />
-            <ImportExportPlugin />
-            <MarkdownTogglePlugin 
+            {/* <SpeechToTextPlugin /> */}
+            {/* <ShareContentPlugin /> */}
+            {/* <ImportExportPlugin /> */}
+            {/* <MarkdownTogglePlugin 
               shouldPreserveNewLinesInMarkdown={true}
               transformers={[
                 TABLE,
@@ -333,13 +333,13 @@ export function Plugins({ }) {
                 ...TEXT_FORMAT_TRANSFORMERS,
                 ...TEXT_MATCH_TRANSFORMERS,
               ]}  
-            />
-            <EditModeTogglePlugin />
-            <>
+            /> */}
+            {/* <EditModeTogglePlugin /> */}
+            {/* <>
               <ClearEditorActionPlugin />
               <ClearEditorPlugin />
-            </>
-            <TreeViewPlugin />
+            </> */}
+            {/* <TreeViewPlugin /> */}
           </div>
         </div>
       </ActionsPlugin>

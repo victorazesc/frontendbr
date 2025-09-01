@@ -1,49 +1,62 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import dynamic from 'next/dynamic'
+import {
+  SerializedEditorState,
+  createEditor,
+  EditorState
+} from 'lexical'
+import {
+  $convertFromMarkdownString,
+  TRANSFORMERS
+} from '@lexical/markdown'
 
-import { SerializedEditorState } from 'lexical'
+// importa os nodes corretamente
+import { nodes } from '@/components/blocks/editor-x/nodes'
 
-import { Editor } from '@/components/blocks/editor-x/editor'
+// Importa o editor dinamicamente (evita SSR error)
+const Editor = dynamic(
+  () => import('@/components/blocks/editor-x/editor').then(mod => mod.Editor),
+  { ssr: false, loading: () => <p>Carregando editor...</p> }
+)
 
-const initialValue = {
-  root: {
-    children: [
-      {
-        children: [
-          {
-            detail: 0,
-            format: 0,
-            mode: 'normal',
-            style: '',
-            text: 'Hello World 🚀',
-            type: 'text',
-            version: 1,
-          },
-        ],
-        direction: 'ltr',
-        format: '',
-        indent: 0,
-        type: 'paragraph',
-        version: 1,
-      },
-    ],
-    direction: 'ltr',
-    format: '',
-    indent: 0,
-    type: 'root',
-    version: 1,
-  },
-} as unknown as SerializedEditorState
+interface EditorDemoProps {
+  value?: string // Markdown
+  onChange?: (markdown: string) => void
+}
 
-export function EditorDemo() {
-  const [editorState, setEditorState] =
-    useState<SerializedEditorState>(initialValue)
+export function EditorDemo({ value = '', onChange }: EditorDemoProps) {
+  const [editorState, setEditorState] = useState<SerializedEditorState>()
+
+  useEffect(() => {
+    const editor = createEditor({
+      namespace: 'Editor',
+      theme: {},
+      nodes,
+      onError: (err) => console.error(err),
+    })
+
+    editor.update(() => {
+      try {
+        const rootNode = $convertFromMarkdownString(value, TRANSFORMERS)
+        const newEditorState = editor.getEditorState()
+        // o root node é mutável, mas precisamos forçar sua aplicação no editor
+        const root = editor.getRootElement()
+        if (rootNode && root) {
+          editor.setEditorState(newEditorState)
+          setEditorState(newEditorState.toJSON())
+        }
+      } catch (err) {
+        console.error('Erro ao converter markdown para editorState:', err)
+      }
+    })
+  }, [value])
 
   return (
     <Editor
       editorSerializedState={editorState}
-      onSerializedChange={(value) => setEditorState(value)}
+      onMarkdownChange={onChange}
     />
   )
 }

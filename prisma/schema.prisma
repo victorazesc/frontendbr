@@ -9,23 +9,26 @@ datasource db {
 
 model Job {
   id                 String           @id @default(uuid()) @db.Uuid
-  repository         RepositorySource
   title              String
+  location           String
+  hasSalaryInfo      Boolean          @default(false)
+  jobContractType    String?
+  jobSeniority       String?
+  companyName        String
+  companyDomain      String
+  companyDocument    String?
+  companyIcon        String?
+  subscriptionAction String?
+  body               String
   state              String           @default("open")
   createdAt          DateTime
   updatedAt          DateTime
   closedAt           DateTime?
   authorAssociation  String?
   type               String?
-  body               String
-  companyName        String?
-  companyDomain      String?
-  companyIcon        String?
-  hasSalaryInfo      Boolean          @default(false)
-  location           String?
-  subscriptionAction String?
-  companyId          String?          @db.Uuid
-  Company            Company?         @relation(fields: [companyId], references: [id])
+  repository         RepositorySource
+  userId             String           @db.Uuid
+  User               User             @relation(fields: [userId], references: [id])
   labels             Label[]          @relation("JobLabels")
 }
 
@@ -42,29 +45,23 @@ model Company {
   name   String
   domain String?
   icon   String?
-  jobs   Job[]
-}
-
-enum RepositorySource {
-  GITHUB
-  FRONTENDBR
-  LINKEDIN
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String    @id @default(uuid()) @db.Uuid
   name          String?
   email         String?   @unique
   emailVerified DateTime?
   image         String?
-  password      String? // usado para login por credentials
+  password      String?
   accounts      Account[]
   sessions      Session[]
+  jobs          Job[]
 }
 
 model Account {
-  id                String  @id @default(cuid())
-  userId            String
+  id                String  @id @default(uuid()) @db.Uuid
+  userId            String  @db.Uuid
   type              String
   provider          String
   providerAccountId String
@@ -82,18 +79,25 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(cuid())
+  id           String   @id @default(uuid()) @db.Uuid
   sessionToken String   @unique
-  userId       String
+  userId       String   @db.Uuid
   expires      DateTime
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
+  id         String   @id @default(uuid()) @db.Uuid
   identifier String
   token      String   @unique
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum RepositorySource {
+  GITHUB
+  FRONTENDBR
+  LINKEDIN
 }

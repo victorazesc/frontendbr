@@ -14,6 +14,7 @@ declare module "next-auth" {
       name?: string | null;
       email?: string | null;
       image?: string | null;
+      provider?: string | null;
     };
   }
 }
@@ -22,6 +23,7 @@ declare module "next-auth/jwt" {
   interface JWT {
     access_token?: string;
     userId?: string;
+    provider?: string;
   }
 }
 
@@ -106,10 +108,27 @@ export const authOptions: NextAuthOptions = {
     strategy: 'jwt',
   },
   callbacks: {
+    async jwt({ token, user, account }) {
+      if (account) {
+        token.provider = account.provider // salva o provedor usado
+      }
+
+      if (user) {
+        token.userId = user.id
+      }
+
+      return token
+    },
+
     async session({ session, token }) {
       if (token?.sub) {
         session.user.id = token.sub
       }
+
+      if (token?.provider) {
+        session.user.provider = token.provider
+      }
+
       return session
     },
   },
