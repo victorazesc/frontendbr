@@ -1,6 +1,6 @@
 import { useFavorites } from "@/stores/useFavorites";
 import { Banknote, Heart } from "lucide-react";
-import Image from "next/image";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "./button";
 
 
@@ -40,7 +40,12 @@ export default function VacancyCard({ vacancy, onClick, selected }: Props) {
         >
             <div className="flex justify-between items-center">
                 <div className="flex gap-2 items-center">
-                    {vacancy.companyDomain && <Image src={`https://www.google.com/s2/favicons?sz=64&domain=${vacancy.companyDomain}`} alt={vacancy.companyName ?? "icone"} width={26} height={26} />}
+                    <Avatar className="size-6 rounded-md bg-muted ring-1 ring-border">
+                        <AvatarImage className="object-contain" src={vacancy.companyDomain ? `https://www.google.com/s2/favicons?sz=64&domain=${vacancy.companyDomain}` : undefined} alt={vacancy.companyName ?? "icone"} />
+                        <AvatarFallback className="rounded-md text-xs">
+                            {(vacancy.companyName?.[0] || '?').toUpperCase()}
+                        </AvatarFallback>
+                    </Avatar>
                     <span className="text-md">{vacancy.companyName}</span>
                 </div>
                 <div className="flex items-center gap-2">

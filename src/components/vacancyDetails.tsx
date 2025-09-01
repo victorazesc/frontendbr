@@ -1,6 +1,6 @@
 import { useFavorites } from "@/stores/useFavorites";
 import type { Vacancy } from "./ui/vancancyCard";
-import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
@@ -20,14 +20,16 @@ export default function VacancyDetails({ selectedVacancy }: { selectedVacancy: V
                     <div className="flex justify-between w-full">
                         {selectedVacancy?.companyName && (
                             <span className="text-[1rem] font-medium flex gap-2 items-center">
-                                {selectedVacancy.companyDomain && (
-                                    <Image
-                                        src={`https://www.google.com/s2/favicons?sz=64&domain=${selectedVacancy.companyDomain}`}
-                                        alt={selectedVacancy.companyName ?? "icone"}
-                                        width={45}
-                                        height={45}
+                                <Avatar className="size-10 rounded-md bg-muted ring-1 ring-border">
+                                    <AvatarImage
+                                      className="object-contain"
+                                      src={selectedVacancy.companyDomain ? `https://www.google.com/s2/favicons?sz=64&domain=${selectedVacancy.companyDomain}` : undefined}
+                                      alt={selectedVacancy.companyName ?? "icone"}
                                     />
-                                )}
+                                    <AvatarFallback className="rounded-md">
+                                      {(selectedVacancy.companyName?.[0] || '?').toUpperCase()}
+                                    </AvatarFallback>
+                                </Avatar>
                                 {selectedVacancy.companyName}
                                 {selectedVacancy.isMine && (
                                     <Badge variant="secondary">Minha vaga</Badge>
