@@ -3,6 +3,7 @@ import "../globals.css";
 import { ThemeProvider } from "@/providers/themeProvider";
 import NavBar from "@/components/navbar";
 import AuthProvider from "@/providers/sessionProvider";
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,6 +19,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head />
       <body>
+        <Analytics />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
