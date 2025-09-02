@@ -57,9 +57,32 @@ export default function MyJobs() {
             <p className="text-xs text-muted-foreground mt-2">
               Criado em: {new Date(job.createdAt).toLocaleDateString()}
             </p>
-            <Button size="sm" onClick={() => router.push(`/job/${job.id}`)}>
-              Ver detalhes
-            </Button>
+            <div className="flex gap-2">
+              <Button size="sm" onClick={() => router.push(`/job/${job.id}`)}>
+                Editar
+              </Button>
+              <Button
+                size="sm"
+                variant="destructive"
+                onClick={async () => {
+                  const ok = window.confirm('Tem certeza que deseja excluir esta vaga?')
+                  if (!ok) return
+                  try {
+                    const res = await fetch(`/api/jobs/${job.id}`, { method: 'DELETE' })
+                    if (!res.ok) {
+                      const j = await res.json().catch(() => ({}))
+                      alert(j.error || 'Erro ao excluir a vaga')
+                      return
+                    }
+                    setJobs((prev) => prev.filter((j) => j.id !== job.id))
+                  } catch (e) {
+                    alert('Erro ao excluir a vaga')
+                  }
+                }}
+              >
+                Excluir
+              </Button>
+            </div>
           </Card>
         ))
       )}

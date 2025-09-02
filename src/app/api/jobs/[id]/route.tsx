@@ -55,3 +55,29 @@ export async function PUT(req: Request, ctx: any) {
     return NextResponse.json({ error: 'Erro interno ao atualizar a vaga' }, { status: 500 })
   }
 }
+
+export async function DELETE(req: Request, ctx: any) {
+  const { params } = ctx ?? {}
+  const id = params?.id as string | undefined
+  const session = await getServerSession(authOptions)
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
+  }
+  if (!id) {
+    return NextResponse.json({ error: 'ID obrigatório' }, { status: 400 })
+  }
+  try {
+    const existing = await prisma.job.findUnique({ where: { id } })
+    if (!existing) {
+      return NextResponse.json({ error: 'Vaga não encontrada' }, { status: 404 })
+    }
+    if (existing.userId !== session.user.id) {
+      return NextResponse.json({ error: 'Sem permissão' }, { status: 403 })
+    }
+    await prisma.job.delete({ where: { id } })
+    return NextResponse.json({ ok: true })
+  } catch (e) {
+    console.error('Erro ao excluir vaga:', e)
+    return NextResponse.json({ error: 'Erro interno ao excluir' }, { status: 500 })
+  }
+}
