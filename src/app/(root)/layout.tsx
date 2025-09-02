@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/providers/themeProvider";
 import NavBar from "@/components/navbar";
 import AuthProvider from "@/providers/sessionProvider";
 import { Analytics } from '@vercel/analytics/next';
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "Frontend BR",
@@ -17,7 +18,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
+
+      <head>
+        <Script
+          src="https://track-mint.vercel.app/js/script.js"
+          defer
+          data-website-id="1VM0fm3oKaJe5mvlA6zhs"
+          data-domain="frontendbr.com"
+          data-debug="true"
+          strategy="afterInteractive"
+        />
+      </head>
       <body>
         <Analytics />
         <ThemeProvider
