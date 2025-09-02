@@ -67,7 +67,14 @@ export default function NavBar() {
                             </Link>
                         </DropdownMenuItem>
 
-                        <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })}>
+                        <DropdownMenuItem onClick={async () => {
+                            try {
+                                await signOut({ callbackUrl: "/", redirect: true })
+                            } catch (e) {
+                                // fallback manual quando o fetch do next-auth falhar
+                                window.location.href = "/api/auth/signout?callbackUrl=/"
+                            }
+                        }}>
                             <Label className="text-left">
                                 Sair
                             </Label>

@@ -3,28 +3,24 @@ import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 
-export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
+export async function GET(req: Request, ctx: any) {
+  const { params } = ctx ?? {}
   const job = await prisma.job.findUnique({
-    where: { id: params.id }
+    where: { id: params?.id }
   })
 
   return NextResponse.json(job)
 }
 
-export async function PUT(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(req: Request, ctx: any) {
+  const { params } = ctx ?? {}
   const session = await getServerSession(authOptions)
   if (!session?.user?.id) {
     return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
   }
 
   const body = await req.json()
-  const id = params.id
+  const id = params?.id
 
   try {
     const existing = await prisma.job.findUnique({ where: { id } })

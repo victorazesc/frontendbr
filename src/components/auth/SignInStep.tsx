@@ -69,12 +69,11 @@ export default function SignInStep({ step, onEmailCheck, provider }: SignInDialo
 
             <DialogFooter>
                 <Button
-                    variant="default"
-                    className="bg-accent-foreground w-full hover:bg-accent-foreground/80"
+                    className="w-full"
                     type="button"
                     onClick={handleContinue}
                 >
-                    Continuar com Email
+                    Continuar com e-mail
                 </Button>
             </DialogFooter>
         </>

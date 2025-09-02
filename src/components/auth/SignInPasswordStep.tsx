@@ -48,12 +48,12 @@ export default function SignInPasswordStep({ step, onBack, provider, email }: Si
                         Senha
                     </Label>
 
-                    <Input id="name" value={password}
+                    <Input id="password" type="password" value={password}
                         onChange={(e) => setPassword(e.target.value)} className="col-span-3" />
                 </div>
             </div>
             <DialogFooter>
-                <Button variant={"default"} className="bg-accent-foreground w-full hover:bg-accent-foreground/80" onClick={handleEmailLogin} type="submit">Iniciar Sessão</Button>
+                <Button className="w-full" onClick={handleEmailLogin} type="submit">Iniciar sessão</Button>
             </DialogFooter>
         </>
     )
